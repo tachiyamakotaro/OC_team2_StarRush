@@ -1,8 +1,6 @@
 #include "stdafx.h"
 #include "Player.h"
 #include "Game.h"
-#include "sound/SoundSource.h"
-#include "sound/SoundEngine.h"
 
 Player::Player()
 {
