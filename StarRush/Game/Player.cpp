@@ -1,15 +1,21 @@
 #include "stdafx.h"
 #include "Player.h"
-#include "Game.h"
+
 
 Player::Player()
 {
-	//ƒ‚ƒfƒ‹‚ğ‰Šú‰»‚·‚éB
+	//ãƒ¢ãƒ‡ãƒ«ã‚’åˆæœŸåŒ–ã™ã‚‹ã€‚
 	m_modelRender.Init("Assets/modelData/Player/Player.tkm");
 
-	//ƒLƒƒƒ‰ƒRƒ“‚ğ‰Šú‰»‚·‚éB
-	m_characterController.Init(25.0f, 75.0f, m_position);
+	//ãƒ¢ãƒ‡ãƒ«ã®å¤§ãã•å¤‰æ›´
+	m_modelRender.SetScale({ 0.6f,0.6f,0.6f });
 
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®åˆæœŸåœ°ç‚¹
+	m_position.x = 0.0f;
+	m_position.y = 0.0f;
+	m_position.z = -250.0f;
+
+	m_characterController.Init(25.0f, -10.0f, m_position);
 }
 
 Player::~Player()
@@ -19,104 +25,52 @@ Player::~Player()
 
 void Player::Update()
 {
-	//ˆÚ“®ˆ—B
+	//ç§»å‹•å‡¦ç†ã€‚
 	Move();
 
-	//‰ñ“]ˆ—B
-	Rotation();
-
-	//ƒXƒe[ƒgŠÇ—B
-	ManageState();
-
-	//ƒAƒjƒ[ƒVƒ‡ƒ“‚ÌÄ¶B
-	PlayAnimation();
-
-	//ƒ‚ƒfƒ‹‚ğXV‚·‚éB
+    //ãƒ¢ãƒ‡ãƒ«ã‚’æ›´æ–°ã™ã‚‹ã€‚
 	m_modelRender.Update();
 }
 
 void Player::Move()
 {
-	//xz‚ÌˆÚ“®‘¬“x‚ğ0.0f‚É‚·‚éB
+	//xzã®ç§»å‹•é€Ÿåº¦ã‚’0.0fã«ã™ã‚‹ã€‚
 	m_moveSpeed.x = 0.0f;
-	m_moveSpeed.z = 0.0f;
+	m_moveSpeed.y = 0.0f;
 
-	//¶ƒXƒeƒBƒbƒN‚Ì“ü—Í—Ê‚ğæ“¾B
+	//å·¦ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å…¥åŠ›é‡ã‚’å–å¾—ã€‚
 	Vector3 stickL;
 	stickL.x = g_pad[0]->GetLStickXF();
 	stickL.y = g_pad[0]->GetLStickYF();
 
-	//ƒJƒƒ‰‚Ì‘O•ûŒü‚Æ‰E•ûŒü‚ÌƒxƒNƒgƒ‹‚ğ‚Á‚Ä‚­‚éB
-	Vector3 forward = g_camera3D->GetForward();
-	Vector3 right = g_camera3D->GetRight();
-	//y•ûŒü‚É‚ÍˆÚ“®‚³‚¹‚È‚¢B
-	forward.y = 0.0f;
-	right.y = 0.0f;
+	//å·¦ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å…¥åŠ›é‡ã¨150.0fã‚’ä¹—ç®—ã€‚
+	m_moveSpeed.x += stickL.x * 150.0f;
+	m_moveSpeed.y += stickL.y * 150.0f;
 
-	//¶ƒXƒeƒBƒbƒN‚Ì“ü—Í—Ê‚Æ200.0f‚ğæZB
-	right *= stickL.x * 180.0f;
-	forward *= stickL.y * 180.0f;
-
-	//ˆÚ“®ˆ—‚ÉƒXƒeƒBƒbƒN‚Ì“ü—Í—Ê‚ğ‰ÁZ‚·‚éB
-	m_moveSpeed += right + forward;
-
-	//ƒLƒƒƒ‰ƒNƒ^[ƒRƒ“ƒgƒ[ƒ‰[‚ğg‚Á‚ÄÀ•W‚ğˆÚ“®‚³‚¹‚éB
-	m_position = m_characterController.Execute(m_moveSpeed, 3.0f / 60.0f);
-
-	//ŠG•`‚«‚³‚ñ‚ÉÀ•W‚ğ‹³‚¦‚éB
-	m_modelRender.SetPosition(m_position);
-}
-
-void Player::Rotation()
-{
-	//x‚©z‚ÌˆÚ“®‘¬“x‚ª‚ ‚Á‚½‚çiƒXƒeƒBƒbƒN‚Ì“ü—Í‚ª‚ ‚Á‚½‚ç)B
-	if (fabsf(m_moveSpeed.x) >= 0.001f || fabsf(m_moveSpeed.z) >= 0.001f);
-	{
-		//ƒLƒƒƒ‰ƒNƒ^[‚Ì•ûŒü‚ğ•Ï‚¦‚éB
-		m_rotation.SetRotationYFromDirectionXZ(m_moveSpeed);
-		//ŠG•`‚«‚³‚ñ‚É‰ñ“]‚ğ‹³‚¦‚éB
-		m_modelRender.SetRotation(m_rotation);
-	}
-}
-
-//ƒXƒe[ƒgŠÇ—B
-void Player::ManageState()
-{
-	//’n–Ê‚É•t‚¢‚Ä‚¢‚È‚©‚Á‚½‚çB
-
-	if (m_characterController.IsOnGround() == false)
-	{
-		//ƒXƒe[ƒg‚ğ1(ƒWƒƒƒ“ƒv’†)‚É‚·‚éB
-		m_playerState = 1;
-		//‚±‚±‚ÅManageState‚Ìˆ—‚ğI‚í‚ç‚¹‚éB
-		return;
-	}
-
-	//’n–Ê‚É•t‚¢‚Ä‚¢‚½‚çB
-	//x‚©z‚ÌˆÚ“®‘¬“x‚ª‚ ‚Á‚½‚çiƒXƒeƒBƒbƒN‚Ì“ü—Í‚ª‚ ‚Á‚½‚ç)B
-	if (fabsf(m_moveSpeed.x) >= 0.001f || fabsf(m_moveSpeed.z))
-	{
-		//ƒXƒe[ƒg‚ğ2(•à‚«)‚É‚·‚éB
-		m_playerState = 2;
-	}
-
-	//x‚Æz‚ÌˆÚ“®‘¬“x‚ª–³‚©‚Á‚½‚ç(ƒXƒeƒBƒbƒN‚Ì“ü—Í‚ª–³‚©‚Á‚½‚ç)B
-	else
-	{
-		//ƒXƒe[ƒg‚ğ0(‘Ò‹@)‚É‚·‚é
-		m_playerState = 0;
-	}
-
-}
-//ƒAƒjƒ[ƒVƒ‡ƒ“‚ÌÄ¶B
-void Player::PlayAnimation()
-{
-
-	if (m_position.y < -1500.0f)
-	{
-		m_position = Vector3(25.0f, 0.0f, 75.0f);
+	//ç§»å‹•ç¯„å›²ã®åˆ¶é™
+	//xè»¸
+	if (m_position.x < -1200.0f) {
+		m_position.x = -1200.0f;
 		m_characterController.SetPosition(m_position);
 	}
+	else if (m_position.x > 1200.0f) {
+		m_position.x = 1200.0f;
+		m_characterController.SetPosition(m_position);
+	}
+	//yè»¸
+	if (m_position.y < -600.0f) {
+		m_position.y = -600.0f;
+		m_characterController.SetPosition(m_position);
+	}
+	else if (m_position.y > 800.0f) {
+		m_position.y = 800.0f;
+		m_characterController.SetPosition(m_position);
+	}
+	//ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼ã‚’ä½¿ã£ã¦åº§æ¨™ã‚’ç§»å‹•ã•ã›ã‚‹ã€‚
+	m_position = m_characterController.Execute(m_moveSpeed, 1.0f / 6.0f);
+
+	//çµµæãã•ã‚“ã«åº§æ¨™ã‚’æ•™ãˆã‚‹ã€‚
+	m_modelRender.SetPosition(m_position);
 }
 
 
