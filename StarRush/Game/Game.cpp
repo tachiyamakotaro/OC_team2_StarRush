@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Game.h"
+
 #include "Player.h"
 #include "GameCamera.h"
 #include "Stage.h"
@@ -26,5 +27,5 @@ void Game::Update()
 
 void Game::Render(RenderContext& rc)
 {
-	m_modelRender.Draw(rc);
+	//m_modelRender.Draw(rc);
 }

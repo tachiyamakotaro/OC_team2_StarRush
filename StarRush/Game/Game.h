@@ -6,8 +6,6 @@ class Player;
 class GameCamera;
 class Stage;
 
-
-
 class Game : public IGameObject
 {
 public:
@@ -25,5 +23,6 @@ private:
 	Vector3 m_pos;
 	GameCamera* m_gameCamera;
 	Vector3* m_position;
+	Stage* m_stage = nullptr;
 };
 

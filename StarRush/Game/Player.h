@@ -5,20 +5,21 @@ class Player:public IGameObject
 public:
 	Player();
 	~Player();
-	//XVˆ—B
+	//æ›´æ–°å‡¦ç†ã€‚
 	void Update();
-	//•`‰æˆ—B
+	//æç”»å‡¦ç†ã€‚
 	void Render(RenderContext& renderContext);
-	//ˆÚ“®ˆ—B
+	//ç§»å‹•å‡¦ç†ã€‚
 	void Move();
+  
 	const Vector3& GetPosition()const {
 		return m_position;
 	}
     
-	//ƒƒ“ƒo•Ï”B
+	//ãƒ¡ãƒ³ãƒå¤‰æ•°ã€‚
 private:
-	ModelRender m_modelRender;   //ƒ‚ƒfƒ‹ƒŒƒ“ƒ_[B
-	Vector3     m_position;      //À•WB
+	ModelRender m_modelRender;   //ãƒ¢ãƒ‡ãƒ«ãƒ¬ãƒ³ãƒ€ãƒ¼ã€‚
+	Vector3     m_position;      //åº§æ¨™ã€‚
 	CharacterController m_characterController;
 	Vector3 m_moveSpeed;
 	Quaternion m_rotation;
