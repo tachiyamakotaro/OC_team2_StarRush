@@ -16,6 +16,11 @@ public:
 	void ManageState();
 	//アニメーション再生。
 	void PlayAnimation();
+
+	void SetPosition(const Vector3& position)
+	{
+		m_position = position;
+	}
     
 	//メンバ変数。
 private:

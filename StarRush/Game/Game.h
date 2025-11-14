@@ -5,6 +5,7 @@
 class Player;
 class GameCamera;
 class BackGround;
+class Stage;
 
 class Game : public IGameObject
 {
@@ -22,5 +23,6 @@ private:
 	Vector3 m_pos;
 	GameCamera* m_gameCamera;
 	Vector3* m_position;
+	Stage* m_stage = nullptr;
 };
 
