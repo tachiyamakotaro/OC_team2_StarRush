@@ -4,7 +4,7 @@
 
 class Player;
 class GameCamera;
-class BackGround;
+class Stage;
 
 class Game : public IGameObject
 {
@@ -17,7 +17,7 @@ public:
 
 private:
 	Player* m_player;
-	BackGround* m_backGround;
+	Stage* m_stage;
 	ModelRender m_modelRender;
 	Vector3 m_pos;
 	GameCamera* m_gameCamera;
