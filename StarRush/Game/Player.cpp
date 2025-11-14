@@ -1,15 +1,16 @@
 #include "stdafx.h"
 #include "Player.h"
 
+
 Player::Player()
 {
-	//ƒ‚ƒfƒ‹‚ð‰Šú‰»‚·‚éB
+	//ãƒ¢ãƒ‡ãƒ«ã‚’åˆæœŸåŒ–ã™ã‚‹ã€‚
 	m_modelRender.Init("Assets/modelData/Player/Player.tkm");
 
-	//ƒ‚ƒfƒ‹‚Ì‘å‚«‚³•ÏX
+	//ãƒ¢ãƒ‡ãƒ«ã®å¤§ãã•å¤‰æ›´
 	m_modelRender.SetScale({ 0.6f,0.6f,0.6f });
 
-	//ƒvƒŒƒCƒ„[‚Ì‰Šú’n“_
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®åˆæœŸåœ°ç‚¹
 	m_position.x = 0.0f;
 	m_position.y = 0.0f;
 	m_position.z = -250.0f;
@@ -24,30 +25,30 @@ Player::~Player()
 
 void Player::Update()
 {
-	//ˆÚ“®ˆ—B
+	//ç§»å‹•å‡¦ç†ã€‚
 	Move();
 
-    //ƒ‚ƒfƒ‹‚ðXV‚·‚éB
+    //ãƒ¢ãƒ‡ãƒ«ã‚’æ›´æ–°ã™ã‚‹ã€‚
 	m_modelRender.Update();
 }
 
 void Player::Move()
 {
-	//xz‚ÌˆÚ“®‘¬“x‚ð0.0f‚É‚·‚éB
+	//xzã®ç§»å‹•é€Ÿåº¦ã‚’0.0fã«ã™ã‚‹ã€‚
 	m_moveSpeed.x = 0.0f;
 	m_moveSpeed.y = 0.0f;
 
-	//¶ƒXƒeƒBƒbƒN‚Ì“ü—Í—Ê‚ðŽæ“¾B
+	//å·¦ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å…¥åŠ›é‡ã‚’å–å¾—ã€‚
 	Vector3 stickL;
 	stickL.x = g_pad[0]->GetLStickXF();
 	stickL.y = g_pad[0]->GetLStickYF();
 
-	//¶ƒXƒeƒBƒbƒN‚Ì“ü—Í—Ê‚Æ150.0f‚ðæŽZB
+	//å·¦ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å…¥åŠ›é‡ã¨150.0fã‚’ä¹—ç®—ã€‚
 	m_moveSpeed.x += stickL.x * 150.0f;
 	m_moveSpeed.y += stickL.y * 150.0f;
 
-	//ˆÚ“®”ÍˆÍ‚Ì§ŒÀ
-	//xŽ²
+	//ç§»å‹•ç¯„å›²ã®åˆ¶é™
+	//xè»¸
 	if (m_position.x < -1200.0f) {
 		m_position.x = -1200.0f;
 		m_characterController.SetPosition(m_position);
@@ -56,7 +57,7 @@ void Player::Move()
 		m_position.x = 1200.0f;
 		m_characterController.SetPosition(m_position);
 	}
-	//yŽ²
+	//yè»¸
 	if (m_position.y < -600.0f) {
 		m_position.y = -600.0f;
 		m_characterController.SetPosition(m_position);
@@ -65,10 +66,10 @@ void Player::Move()
 		m_position.y = 800.0f;
 		m_characterController.SetPosition(m_position);
 	}
-	//ƒLƒƒƒ‰ƒNƒ^[ƒRƒ“ƒgƒ[ƒ‰[‚ðŽg‚Á‚ÄÀ•W‚ðˆÚ“®‚³‚¹‚éB
+	//ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼ã‚’ä½¿ã£ã¦åº§æ¨™ã‚’ç§»å‹•ã•ã›ã‚‹ã€‚
 	m_position = m_characterController.Execute(m_moveSpeed, 1.0f / 6.0f);
 
-	//ŠG•`‚«‚³‚ñ‚ÉÀ•W‚ð‹³‚¦‚éB
+	//çµµæãã•ã‚“ã«åº§æ¨™ã‚’æ•™ãˆã‚‹ã€‚
 	m_modelRender.SetPosition(m_position);
 }
 

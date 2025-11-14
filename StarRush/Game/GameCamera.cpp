@@ -14,12 +14,14 @@ GameCamera::~GameCamera()
 
 bool GameCamera::Start()
 {
-	//�����_���王�_�܂ł̃x�N�g���̐ݒ�B
+	//注視点から視点までのベクトルの設定。
+
 	m_toCameraPos.Set(0.0f, 0.0f, -250.0f);
-	//�v���C���[�̃C���X�^���X��T���B
+
+	//プレイヤーのインスタンスを探す。
 	m_player = FindGO<Player>("player");
 
-	//�J�����̃j�A�N���b�v�ƃt�@�[�N���b�v��ݒ�B����B
+	//カメラのニアクリップとファークリップを設定。する。
 	g_camera3D->SetNear(1.0f);
 	g_camera3D->SetFar(40000.0f);
 
@@ -28,48 +30,55 @@ bool GameCamera::Start()
 
 void GameCamera::Update()
 {
-	//�J�����̍X�V�B
-	//�����_���v�Z����B
+	//カメラの更新。
+	//注視点を計算する。
+
 	Vector3 target = m_player->GetPosition();
-	//�v���C���̑������炿����Ə�𒍎��_�Ƃ���B
+
+	//プレイヤの足元からちょっと上を注視点とする。
 	//target.y += 80.0f;
 
 	Vector3 toCameraPosOld = m_toCameraPos;
-	//�p�b�h�̓��͂��g���ăJ�������񂷁B
+	//パッドの入力を使ってカメラを回す。
+
 	/*float x = g_pad[0]->GetRStickXF();
 	float y = g_pad[0]->GetRStickYF();*/
-	//Y������̉�]
+	//Y軸周りの回転
 	//Quaternion qRot;
 	//qRot.SetRotationDeg(Vector3::AxisY, 1.3f * x);
 	//qRot.Apply(m_toCameraPos);
-	////X������̉�]
+	////X軸周りの回転
 	//Vector3 axisX;
 	//axisX.Cross(Vector3::AxisY, m_toCameraPos);
 	//axisX.Normalize();
 	//qRot.SetRotationDeg(axisX, 1.3f * y);
 	//qRot.Apply(m_toCameraPos);
-	//�J�����̉�]�̏�����`�F�b�N����B
-	//�����_���王�_�܂ł̃x�N�g���𐳋K������B
-	//���K������ƁA�x�N�g���̑傫����1�ɂȂ�B
-	//�傫����1�ɂȂ�Ƃ������Ƃ́A�x�N�g�����狭�����Ȃ��Ȃ�A�����݂̂̏��ƂȂ�Ƃ������ƁB
+
+	//カメラの回転の上限をチェックする。
+	//注視点から視点までのベクトルを正規化する。
+	//正規化すると、ベクトルの大きさが1になる。
+	//大きさが1になるということは、ベクトルから強さがなくなり、方向のみの情報となるということ。
+
 
 	//Vector3 toPosDir = m_toCameraPos;
 	//toPosDir.Normalize();
 	//if (toPosDir.y < -0.2f) {
-	//	//�J����������������B
+	//	//カメラが上向きすぎ。
 	//	m_toCameraPos = toCameraPosOld;
 	//}
 	//else if (toPosDir.y > 0.9f) {
-	//	//�J�����������������B
+	//	//カメラが下向きすぎ。
 	//	m_toCameraPos = toCameraPosOld;
 	//}
 
-	//���_���v�Z����B
+	//視点を計算する。
 	Vector3 pos = target + m_toCameraPos;
-	//���C���J�����ɒ����_�Ǝ��_��ݒ肷��B
+	//メインカメラに注視点と視点を設定する。
 	g_camera3D->SetTarget(target);
 	g_camera3D->SetPosition(pos);
+	
 
-	//�J�����̍X�V
+
+	//カメラの更新
 	g_camera3D->Update();
 }
