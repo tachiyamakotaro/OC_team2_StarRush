@@ -15,7 +15,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="GameCamera.cpp" />
-    <ClCompile Include="StageManager.cpp" />
+    <ClCompile Include="StageObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -26,6 +26,6 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="GameCamera.h" />
-    <ClInclude Include="StageManager.h" />
+    <ClInclude Include="StageObject.h" />
   </ItemGroup>
 </Project>

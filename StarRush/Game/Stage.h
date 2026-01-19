@@ -1,8 +1,8 @@
-#pragma once
+﻿#pragma once
 #include "level3DRender/LevelRender.h"
 
 class Player;
-class StageManager;
+class StageObject;
 
 class Stage :public IGameObject
 {
@@ -22,6 +22,6 @@ private:
 	Vector3 m_pos;
 
 	Player* m_player = nullptr;
-	StageManager* m_stageMana = nullptr;
+	StageObject* m_stageObject = nullptr;
 };
 

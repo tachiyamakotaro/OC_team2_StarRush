@@ -1,12 +1,13 @@
-#pragma once
-class StageManager:public IGameObject
+﻿#pragma once
+class StageObject :public IGameObject
 {
 public:
-	StageManager();
-	~StageManager();
+	~StageObject();
 	bool Start();
 	void Update();
 	void Render(RenderContext& rc);
+
+public:
 
 	void SetPosition(const Vector3& position)
 	{
