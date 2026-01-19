@@ -12,6 +12,7 @@ public:
 	//移動処理。
 	void Move();
 
+
 	void SetPosition(const Vector3& position) {
 		m_position = position;
 	}
@@ -20,7 +21,6 @@ public:
 		return m_position;
 	}
 
-	
     
 	//メンバ変数。
 private:

@@ -4,6 +4,10 @@
 #include "GameCamera.h"
 #include "Stage.h"
 
+#include "Player.h"
+#include "GameCamera.h"
+#include "Stage.h"
+
 
 bool Game::Start()
 {
@@ -26,5 +30,5 @@ void Game::Update()
 
 void Game::Render(RenderContext& rc)
 {
-	m_modelRender.Draw(rc);
+	//m_modelRender.Draw(rc);
 }
