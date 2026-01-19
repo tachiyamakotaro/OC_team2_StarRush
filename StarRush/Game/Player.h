@@ -11,10 +11,16 @@ public:
 	void Render(RenderContext& renderContext);
 	//移動処理。
 	void Move();
+
+
+	void SetPosition(const Vector3& position) {
+		m_position = position;
+	}
   
 	const Vector3& GetPosition()const {
 		return m_position;
 	}
+
     
 	//メンバ変数。
 private:
