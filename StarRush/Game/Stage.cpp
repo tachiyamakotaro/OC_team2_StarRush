@@ -1,7 +1,7 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "Stage.h"
-#include"StageManager.h"
 #include"Player.h"
+#include"StageObject.h"
 
 bool Stage::Start()
 {
@@ -11,14 +11,14 @@ bool Stage::Start()
 
 void Stage::LevelSetting()
 {
-	m_levelRender.Init("Assets/levelData/StageLevel.tkl", [&](LevelObjectData& objData)
+	m_levelRender.Init("Assets/levelData/Stage.tkl", [&](LevelObjectData& objData)
 		{
-			if (objData.EqualObjectName(L"Stage"))
+			if (objData.EqualObjectName(L"Wall"))
 			{
-				m_stageMana = NewGO<StageManager>(0);
-				m_stageMana->SetPosition(objData.position);
-				m_stageMana->SetRotation(objData.rotation);
-				m_stageMana->SetScale(objData.scale);
+				m_stageObject = NewGO<StageObject>(0, "stageObject");
+				m_stageObject->SetPosition(objData.position);
+				m_stageObject->SetRotation(objData.rotation);
+				m_stageObject->SetScale(objData.scale);
 				return true;
 			}
 
@@ -26,6 +26,9 @@ void Stage::LevelSetting()
 			{
 				m_player = NewGO<Player>(0,"player");
 				m_player->SetPosition(objData.position);
+				m_player->SetRotation(objData.rotation);
+				m_player->SetScale(objData.scale);
+				return true;
 			}
 			return false;
 		});
@@ -33,7 +36,7 @@ void Stage::LevelSetting()
 
 void Stage::Update()
 {
-
+	m_levelRender.Update();
 }
 
 void Stage::Render(RenderContext& rc)
